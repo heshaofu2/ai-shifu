@@ -89,7 +89,7 @@
     max-width: 350px;
     margin-left: auto;
     margin-right: auto;
-    
+
     .listTitle {
       width: 100%;
       color: var(--color-8);
@@ -97,14 +97,14 @@
       font-weight: 500;
       font-size: var(--font-size-5);
     }
-    
+
     .listItem {
       display: flex;
       color: var(--color-8);
       margin-bottom: 2px;
       width: 100%;
       font-size: var(--font-size-5);
-      
+
       .listNumber {
         margin-right: 5px;
         flex-shrink: 0;
