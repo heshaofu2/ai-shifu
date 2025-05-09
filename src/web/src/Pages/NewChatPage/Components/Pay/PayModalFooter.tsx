@@ -5,15 +5,15 @@ import { useTranslation } from 'react-i18next';
 
 export const PayModalFooter = ({ className }) => {
   const { t } = useTranslation();
-  
+
   const renderVirtualProductPoint1 = () => {
     const point1Text = t('pay.virtualProductPoint1');
     const parts = point1Text.split(/\{\{modelServiceAgreement\}\}|\{\{userPrivacyPolicy\}\}/g);
-    
+
     if (parts.length !== 3) {
       return point1Text;
     }
-    
+
     return (
       <>
         {parts[0]}
@@ -40,7 +40,7 @@ export const PayModalFooter = ({ className }) => {
       </>
     );
   };
-  
+
   return (
     <div className={classNames(styles.protocolWrapper, className)}>
       <div className={styles.virtualProductDesc}>
