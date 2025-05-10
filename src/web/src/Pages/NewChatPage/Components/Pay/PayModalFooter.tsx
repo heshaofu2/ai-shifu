@@ -25,9 +25,7 @@ export const PayModalFooter = ({ className }) => {
           rel="noopener"
         >
           {t('pay.modelServiceAgreement')}
-        </a>
-        {parts[1]}
-        <a
+        </a>{parts[1]}<a
           className={styles.protocolLink}
           href="/privacypolicy"
           target="_blank"
