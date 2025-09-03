@@ -5,6 +5,7 @@
     "chatInputPlaceholder": "有什么想问的？",
     "chatInputWarn": "请输入问题",
     "chatTips": "内容由 AI 大模型生成，无法确保真实准确，仅供学习参考",
+    "aiDisclaimer": "内容由 AI 在人类指导下生成",
     "copySuccess": "已复制到剪切板",
     "copyText": "复制",
     "loginSuccess": "已经登录成功了",
