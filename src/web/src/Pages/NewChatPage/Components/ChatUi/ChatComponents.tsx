@@ -1035,7 +1035,7 @@ export const ChatComponents = forwardRef(
             onSizeChange={onChatInteractionAreaSizeChange}
           />
         )}
-        
+
         <div className={styles.aiDisclaimer}>
           {t('chat.aiDisclaimer')}
         </div>
