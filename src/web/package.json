@@ -1,6 +1,6 @@
 {
   "name": "ai-shifu-web",
-  "version": "0.1.0",
+  "version": "0.6.0",
   "private": true,
   "dependencies": {
     "@ai-shifu/chatui": "https://github.com/ai-shifu/chatui.git#no-scroll",
@@ -22,7 +22,7 @@
     "animejs": "^3.2.2",
     "antd": "^5.23.2",
     "antd-mobile": "^5.37.1",
-    "axios": "^1.8.2",
+    "axios": "^1.12.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "classnames": "^2.5.1",

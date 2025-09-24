@@ -76,7 +76,9 @@ from .consts import (
 from typing import Union
 
 
-def html_2_markdown(content: str, variables_in_prompt: list[str]) -> str:
+def html_2_markdown(
+    content: str, variables_in_prompt: list[str], convert_image_to_html: bool = True
+) -> str:
     """
     convert html to markdown
     Args:
@@ -106,7 +108,10 @@ def html_2_markdown(content: str, variables_in_prompt: list[str]) -> str:
         title = match.group("title")
         url = match.group("url")
         scale = match.group("scale")
-        return f"<img src='{url}' alt='{title}' style='width: {scale}%;' />"
+        if convert_image_to_html:
+            return f"<img src='{url}' alt='{title}' style='width: {scale}%;' />"
+        else:
+            return f"![{title}]({url})"
 
     content = re.sub(
         r'<span\s+data-tag="video"[^>]*data-url="(?P<url>[^"]+)"[^>]*data-title="(?P<title>[^"]+)"[^>]*>[^<]*</span>',
@@ -602,12 +607,7 @@ def check_login_block_dto(
     Returns:
         BlockUpdateResultDto: Result with error message if validation fails
     """
-    if (
-        not block_dto.block_content.label
-        or not block_dto.block_content.label.lang
-        or not "".join(list(block_dto.block_content.label.lang.values()))
-    ):
-        return BlockUpdateResultDto(None, _("SHIFU.LOGIN_LABEL_REQUIRED"))
+    # Login blocks can rely on default copy when no label is specified.
     return BlockUpdateResultDto(None, None)
 
 
@@ -625,12 +625,7 @@ def check_payment_block_dto(
     Returns:
         BlockUpdateResultDto: Result with error message if validation fails
     """
-    if (
-        not block_dto.block_content.label
-        or not block_dto.block_content.label.lang
-        or not "".join(list(block_dto.block_content.label.lang.values()))
-    ):
-        return BlockUpdateResultDto(None, _("SHIFU.PAYMENT_LABEL_REQUIRED"))
+    # Payment blocks can fall back to default copy, so skip label validation.
     return BlockUpdateResultDto(None, None)
 
 

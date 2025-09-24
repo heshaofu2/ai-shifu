@@ -105,7 +105,6 @@ def publish_shifu_draft(app, user_id: str, shifu_id: str):
         outline_tree = build_outline_tree(app, shifu_id)
 
         def publish_outline_item(node: ShifuOutlineTreeNode, history_item: HistoryItem):
-
             outline_item = PublishedOutlineItem()
             draft_outline_item: DraftOutlineItem = node.outline
             outline_item.shifu_bid = shifu_id
@@ -131,6 +130,7 @@ def publish_shifu_draft(app, user_id: str, shifu_id: str):
             outline_item.prerequisite_item_bids = (
                 draft_outline_item.prerequisite_item_bids
             )
+            outline_item.content = draft_outline_item.content
             db.session.add(outline_item)
             db.session.flush()
             outline_item_history_item = HistoryItem(
@@ -368,7 +368,9 @@ def _generate_summaries(
     return outline_summary_map
 
 
-def _get_shifu_data(app, shifu_id: str) -> tuple[
+def _get_shifu_data(
+    app, shifu_id: str
+) -> tuple[
     ShifuInfoDto,
     list[str],
     dict[str, list[PublishedBlock]],
