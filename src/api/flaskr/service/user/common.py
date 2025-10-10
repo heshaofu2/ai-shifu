@@ -93,15 +93,24 @@ def validate_user(app: Flask, token: str) -> UserInfo:
 
 
 def update_user_info(
-    app: Flask, user: UserInfo, name, email=None, mobile=None, language=None
+    app: Flask,
+    user: UserInfo,
+    name,
+    email=None,
+    mobile=None,
+    language=None,
+    avatar=None,
 ) -> UserInfo:
     with app.app_context():
         if user:
             app.logger.info(
-                "update_user_info {} {} {} {}".format(name, email, mobile, language)
+                "update_user_info {} {} {} {} {}".format(
+                    name, email, mobile, language, avatar
+                )
             )
             dbuser = User.query.filter_by(user_id=user.user_id).first()
-            dbuser.name = name
+            if name is not None:
+                dbuser.name = name
             if email is not None:
                 dbuser.email = email
             if mobile is not None:
@@ -111,6 +120,8 @@ def update_user_info(
                     dbuser.user_language = language
                 else:
                     raise_error("USER.LANGUAGE_NOT_FOUND")
+            if avatar is not None:
+                dbuser.user_avatar = avatar
             db.session.commit()
             return UserInfo(
                 user_id=user.user_id,
@@ -299,7 +310,17 @@ def verify_sms_code(
                 .first()
             )
         elif user_id != user_info.user_id and course_id is not None:
-            new_profiles = get_user_profile_labels(app, user_id, course_id)
+            new_profiles_dto = get_user_profile_labels(app, user_id, course_id)
+            new_profiles = [
+                {
+                    "key": profile.key,
+                    "value": profile.value,
+                    "label": profile.label,
+                    "type": profile.type,
+                    "items": profile.items,
+                }
+                for profile in new_profiles_dto.profiles
+            ]
             update_user_profile_with_lable(
                 app, user_info.user_id, new_profiles, False, course_id
             )
@@ -395,7 +416,17 @@ def verify_mail_code(
                 .first()
             )
         elif user_id != user_info.user_id and course_id is not None:
-            new_profiles = get_user_profile_labels(app, user_id, course_id)
+            new_profiles_dto = get_user_profile_labels(app, user_id, course_id)
+            new_profiles = [
+                {
+                    "key": profile.key,
+                    "value": profile.value,
+                    "label": profile.label,
+                    "type": profile.type,
+                    "items": profile.items,
+                }
+                for profile in new_profiles_dto.profiles
+            ]
             update_user_profile_with_lable(
                 app, user_info.user_id, new_profiles, False, course_id
             )
